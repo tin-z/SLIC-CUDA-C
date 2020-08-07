@@ -3,9 +3,9 @@
 > Altin Thartori, github.com/tin-z
 
 
-Examples with M:10,20 K:50,400,1000
+</br>
+Examples with M:10,20 K:400,1000
 
-![k50](images/k50.png)
 ![k400](images/k400.png)
 ![k1000](images/k1000.png)
 
@@ -24,7 +24,7 @@ Examples with M:10,20 K:50,400,1000
 ---
 
 
-#### Refs ####
+### Refs ###
  - [SLIC Superpixels paper](https://www.researchgate.net/publication/225069465_SLIC_Superpixels_Compared_to_State-of-the-Art_Superpixel_Methods)
  - [SLIC Superpixels code](https://github.com/PSMM/SLIC-Superpixels)
 
@@ -32,7 +32,7 @@ Examples with M:10,20 K:50,400,1000
 ---
 
 
-#### Compilation ####
+### Compilation ###
 
 To compile this program you need to launch nvcc as follows:
 ```
@@ -53,7 +53,7 @@ To compile this program you need to launch nvcc as follows:
 ---
 
 
-#### Testing with nvprof ####
+### Testing with nvprof ###
 
  - Time that took executing the kernels:
 ```
@@ -79,8 +79,11 @@ To compile this program you need to launch nvcc as follows:
 ---
 
 
-#### Correctness and performance ####
+### Correctness and performance ###
+Tested on Tesla M2090 gpu.
 
+
+</br>
  - Results on the BSDS500 dataset, Boundary Recall (Rec), Undersegmen-tation Error (UE), Explained Variation (EV)
 
 | K | Rec | 1 - UE | EV |
@@ -95,10 +98,15 @@ To compile this program you need to launch nvcc as follows:
 | 1227 |  0.849154 |  0.914359 |   0.88348 |
 | 1507 |  0.869528 |  0.919703 |  0.890568 |
 
+
+</br>
+
 The results are similar to the original version, as we can note here (the image is taken from [BASS](https://www.cs.bgu.ac.il/~orenfr/BASS/Uziel_ICCV_2019.pdf))
 ![bench](images/bench_all.png)
 
+
 ---
+
 
  - Comparison complexity t (best-case)
 
@@ -109,9 +117,9 @@ The results are similar to the original version, as we can note here (the image 
 | Update | O(N) | O(S^2) |
 | ------ | ------ | ------ |
 | Total complexity | O(INk) | O(IN) |
- 
 
 
+</br>
  - Comparison SLIC C++ and CUDA (in millisec) (M:40)
 
 | Arch | K:300 | K:600 | K1000 |
@@ -123,28 +131,33 @@ The results are similar to the original version, as we can note here (the image 
 | bitm |  579.40   |  1119.97  |  1850.46  |
 
 
- - Occupancy ratio (M:40, K:1000)
+</br>
+ - Occupancy ratio (Also the main functions) [M:40, K:1000]
 
-| Arch |         Main functions             |
-|      | initClusters | assignment | update |
+| Arch | initClusters | assignment | update |
+| ------ | ------ | ------ | ------ |
 | gmem | 0.08 | 0.80 | 0.08 |
 | smem | 0.08 | 0.80 | 0.04 |
 | sync | 0.08 | 0.80 | 0.08 |
 | bitm | 0.08 | 0.80 | 0.08 |
 
 
- - Branch efficiency (less warp divergence level, M:40, K:1000)
-| Arch |         Main functions             |
-|      | initClusters | assignment | update |
+</br>
+ - Branch efficiency (less warp divergence level) [M:40, K:1000]
+
+| Arch | initClusters | assignment | update |
+| ------ | ------ | ------ | ------ |
 | gmem | 92.83 | 99.99 | 99.87  |
 | smem | 92.83 | 99.97 | 100.00 |
 | sync | 92.83 | 99.99 | 99.87  |
 | bitm | 92.83 | 99.99 | 99.86  |
  
 
- - Global memory Load(L) and store(S) efficiency
-| Arch |         Main functions             |
-|      | initClusters | assignment | update |
+</br>
+ - Global memory Load(L) and store(S) efficiency [M:40, K:1000]
+
+| Arch | initClusters | assignment | update |
+| ------ | ------ | ------ | ------ |
 | gmem | 7.02 </br> 100.00 | 96.29 </br> 68.84 | 3.61 </br> 96.72 |
 | smem | 7.02 </br> 100.00 | 96.31 </br> 68.84 | 41.88 </br> 98.43 |
 | sync | 7.02 </br> 100.00 | 96.35 </br> 68.84 | 3.60 </br> 96.63 |

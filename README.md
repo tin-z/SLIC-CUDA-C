@@ -80,7 +80,7 @@ To compile this program you need to launch nvcc as follows:
 
 
 ### Correctness and performance ###
-Tested on Tesla M2090 gpu.
+Tested on Tesla M2090 gpu, BSDS500 dataset
 
 
 </br>
